@@ -1,0 +1,6 @@
+This is a userscript that I quickly hacked together to bulk hide activities from Facebook Timeline.
+
+The script adds a link "Hide all activity from this section" for each month in the Activity Log. When you click on this link it will hide all activity for that month.
+
+You will need to use Firefox with the Greasemonkey extension and then visit XXX to install.
+
