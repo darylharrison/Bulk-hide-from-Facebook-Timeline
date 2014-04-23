@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Bulk hide from Facebook Timeline
 // @namespace      https://github.com/darylharrison
-// @include        https://www.facebook.com/*/allactivity
+// @include        https://www.facebook.com/*/allactivity*
 // @require        http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 // @grant          none
 // @version        0.2 (works on Facebook as of 2014-01-01)
@@ -41,8 +41,8 @@ try {
 }
 
 function main() {
-    $(".fbTimelineSection").prepend('<a class="hideAllBtn" style="font-size:16px" href"#">Hide all activity from this month</a>');
-    $("div[id^=\"year\"]").prepend('<a class="hideAllBtn" style="font-size:16px" href"#">Hide all activity from this year</a>');
+    $(".fbTimelineSection").prepend('<a class="hideAllBtn" style="font-size:16px" href="#">Hide all activity from this month</a>');
+    $("div[id^=\"year\"]").prepend('<a class="hideAllBtn" style="font-size:16px" href="#">Hide all activity from this year</a>');
     $(".hideAllBtn").click(function() {
         hideAll($(this).parent());
     });
@@ -52,13 +52,17 @@ function main() {
 function hideAll(section) {
     $(section).find('a[aria-label="Allowed on Timeline"]').each(function(i) {
         var dropdownBtn = this;
+
         setTimeout(function() {
             $('html, body').animate({
                 scrollTop: $(dropdownBtn).offset().top-200,
             }, 100);
             clickLink(dropdownBtn); // click the dropdown button
+            var ariaowns = dropdownBtn.attributes.getNamedItem('aria-owns'); 
             setTimeout(function() {
-                $(dropdownBtn).parent().find('a[ajaxify*=\"action=hide\"]').each(function() {
+                
+                $("#" + ariaowns.value).find('a[ajaxify*=\"action=hide\"]').each(function() {
+                    
                     clickLink(this); // then click the "Hide from Timeline" button
                 });
             }, 1000);
